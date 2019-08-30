@@ -12,6 +12,12 @@ public class ScoreViewer : MonoBehaviour
     //スコアの合計値の文字列
     public Text TotalScoreText;
 
+    /* 定数 */
+    private const int smallStarTagPoint = 10;
+    private const int largeStarTag = 20;
+    private const int smallCloudTag = 15;
+    private const int largeCloudTag = 50;
+
     // Use this for initialization
     void Start()
     {
@@ -22,9 +28,6 @@ public class ScoreViewer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //得点（Score）を常に表示（更新）
-        TotalScoreText.text = "Score:" + TotalScore.ToString();
 
     }
 
@@ -41,20 +44,31 @@ public class ScoreViewer : MonoBehaviour
           ============================================ */
         if (other.gameObject.tag == "SmallStarTag")
         {
-            this.TotalScore += 10;
+            this.TotalScore += smallStarTagPoint;
+            ViewScore(this.TotalScore);
         }
         else if (other.gameObject.tag == "LargeStarTag")
         {
-            this.TotalScore += 20;
+            this.TotalScore += largeStarTag;
+            ViewScore(this.TotalScore);
         }
         else if (other.gameObject.tag == "SmallCloudTag")
         {
-            this.TotalScore += 15;
+            this.TotalScore += smallCloudTag;
+            ViewScore(this.TotalScore);
         }
         else if (other.gameObject.tag == "LargeCloudTag")
         {
-            this.TotalScore += 50;
+            this.TotalScore += largeCloudTag;
+            ViewScore(this.TotalScore);
         }
 
+    }
+
+    //scoreを表示
+    void ViewScore(int TotalScore)
+    {
+        //得点（Score）を常に表示（更新）
+        this.TotalScoreText.text = "Score:" + TotalScore.ToString();
     }
 }

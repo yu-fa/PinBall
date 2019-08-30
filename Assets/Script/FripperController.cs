@@ -26,6 +26,75 @@ public class FripperController : MonoBehaviour
     void Update()
     {
 
+        // タッチの確認
+        if (Input.touchCount > 0)
+        {
+            actionTouch();
+        }
+        else
+        {
+            actionArrow();
+        }
+
+    }
+
+    void actionTouch()
+    {
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            // タッチ状況
+            Touch touch = Input.GetTouch(0);
+            Touch[] touches = Input.touches;
+
+            //タッチすると行う何かをここに記入
+            if (touch.phase == TouchPhase.Began)
+            {
+                // 左のフリッパーを動かす
+                if (Input.mousePosition.x <= 562.5 && tag == "LeftFripperTag")
+                {
+                    SetAngle(this.flickAngle);
+                }
+                // 右のフリッパーを動かす
+                if (Input.mousePosition.x > 562.5 && tag == "RightFripperTag")
+                {
+                    SetAngle(this.flickAngle);
+                }                
+            }
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                // 左のフリッパーを戻す
+                if (Input.mousePosition.x <= 562.5 && tag == "LeftFripperTag")
+                {
+                    SetAngle(this.defaultAngle);
+                }
+                // 右のフリッパーを戻す
+                if (Input.mousePosition.x > 562.5 && tag == "RightFripperTag")
+                {
+                    SetAngle(this.defaultAngle);
+                }
+            }
+
+            if (touch.phase == TouchPhase.Moved)
+            {
+                // 左のフリッパーを動かす
+                if (Input.mousePosition.x <= 562.5 && tag == "LeftFripperTag")
+                {
+                    SetAngle(this.flickAngle);
+                }
+                // 右のフリッパーを動かす
+                if (Input.mousePosition.x > 562.5 && tag == "RightFripperTag")
+                {
+                    SetAngle(this.flickAngle);
+                }
+
+            }
+
+        }
+    }
+
+    void actionArrow()
+    {
         //左矢印キーを押した時左フリッパーを動かす
         if (Input.GetKeyDown(KeyCode.LeftArrow) && tag == "LeftFripperTag")
         {
@@ -55,4 +124,5 @@ public class FripperController : MonoBehaviour
         jointSpr.targetPosition = angle;
         this.myHingeJoint.spring = jointSpr;
     }
+
 }
