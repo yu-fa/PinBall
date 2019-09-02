@@ -12,6 +12,10 @@ public class FripperController : MonoBehaviour
     //弾いた時の傾き
     private float flickAngle = -20;
 
+    // FingerId格納用
+    private int leftFingerId;
+    private int rightFingerId;
+
     // Use this for initialization
     void Start()
     {
@@ -43,51 +47,36 @@ public class FripperController : MonoBehaviour
         for (int i = 0; i < Input.touchCount; i++)
         {
             // タッチ状況
-            Touch touch = Input.GetTouch(0);
-            Touch[] touches = Input.touches;
+            Touch touch = Input.GetTouch(i);
 
             //タッチすると行う何かをここに記入
             if (touch.phase == TouchPhase.Began)
             {
                 // 左のフリッパーを動かす
-                if (Input.mousePosition.x <= 562.5 && tag == "LeftFripperTag")
+                if (touch.position.x <= Screen.width * 0.5 && tag == "LeftFripperTag")
                 {
+                    this.leftFingerId = touch.fingerId;
                     SetAngle(this.flickAngle);
                 }
                 // 右のフリッパーを動かす
-                if (Input.mousePosition.x > 562.5 && tag == "RightFripperTag")
+                if (touch.position.x > Screen.width * 0.5 && tag == "RightFripperTag")
                 {
+                    this.rightFingerId = touch.fingerId;
                     SetAngle(this.flickAngle);
                 }                
             }
-
-            if (touch.phase == TouchPhase.Ended)
+             else if (touch.phase == TouchPhase.Ended)
             {
                 // 左のフリッパーを戻す
-                if (Input.mousePosition.x <= 562.5 && tag == "LeftFripperTag")
+                if (touch.fingerId == this.leftFingerId && tag == "LeftFripperTag")
                 {
                     SetAngle(this.defaultAngle);
                 }
                 // 右のフリッパーを戻す
-                if (Input.mousePosition.x > 562.5 && tag == "RightFripperTag")
+                if (touch.fingerId == this.rightFingerId && tag == "RightFripperTag")
                 {
                     SetAngle(this.defaultAngle);
                 }
-            }
-
-            if (touch.phase == TouchPhase.Moved)
-            {
-                // 左のフリッパーを動かす
-                if (Input.mousePosition.x <= 562.5 && tag == "LeftFripperTag")
-                {
-                    SetAngle(this.flickAngle);
-                }
-                // 右のフリッパーを動かす
-                if (Input.mousePosition.x > 562.5 && tag == "RightFripperTag")
-                {
-                    SetAngle(this.flickAngle);
-                }
-
             }
 
         }
